@@ -815,12 +815,12 @@ int main(int argc, char * argv[]){
 		fprintf(stderr, "dataset: MNIST=0, IRIS=1\n");
 		fprintf(stderr, "num_trees: <1024\n");
 		fprintf(stderr, "seed: int\n");
-		exit(1);
+		//exit(1);
 	}
 	
-	mnist_iris = atoi(argv[1]);
-	num_trees = atoi(argv[2]);
-	seed = atoi(argv[3]);
+	mnist_iris = atoi("0");
+	num_trees = atoi("10");
+	seed = atoi("1887");
 	srand(seed);
 
 	int TRAIN_NUM,FEATURE,TEST_NUM,NUMBER_OF_CLASSES;
