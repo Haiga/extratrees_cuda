@@ -817,12 +817,12 @@ int main(int argc, char * argv[]){
 		fprintf(stderr, "seed: int\n");
 		//exit(1);
 	}
-	
+	fprintf(stderr, "1\n");	
 	mnist_iris = atoi("0");
 	num_trees = atoi("10");
 	seed = atoi("1887");
 	srand(seed);
-
+	fprintf(stderr, "2\n");		
 	int TRAIN_NUM,FEATURE,TEST_NUM,NUMBER_OF_CLASSES;
 	char file_train_set[50],file_train_label[50],file_test_label[50],file_test_set[50];
 	
@@ -836,7 +836,7 @@ int main(int argc, char * argv[]){
 		labels_train = (float *)malloc(TRAIN_NUM*sizeof(float));
 		dataset_test = (float *)malloc(FEATURE * TEST_NUM*sizeof(float));
 		labels_test = (float *)malloc(TEST_NUM*sizeof(float));
-
+		fprintf(stderr, "3\n");	
 		strncpy(file_test_set, "data/t10k-images-idx3-ubyte", 50);
 		strncpy(file_train_set,"data/train-images-idx3-ubyte",50);
 		strncpy(file_train_label, "data/train-labels-idx1-ubyte",50);
@@ -844,6 +844,7 @@ int main(int argc, char * argv[]){
 
 		readData(dataset_train,labels_train,file_train_set,file_train_label);
 		readData(dataset_test,labels_test,file_test_set,file_test_label);
+		fprintf(stderr, "3\n");	
 
 	}else if(mnist_iris == 1){
 		TRAIN_NUM = 100;
@@ -860,11 +861,11 @@ int main(int argc, char * argv[]){
 		read_csv_iris(dataset_train,labels_train,TRAIN_NUM,file_train_set);
 		read_csv_iris(dataset_test,labels_test,TEST_NUM,file_test_set);
 	}
-
+	fprintf(stderr, "4\n");	
 	float *dataset_train_T;
 	dataset_train_T = (float *)malloc(TRAIN_NUM * FEATURE * sizeof(float));
 	copy_transpose(dataset_train_T, dataset_train, TRAIN_NUM, FEATURE);
-
+	
 	float *d_trees;
 	int *tree_arr_length;
 	int *d_tree_lengths;
@@ -897,7 +898,7 @@ int main(int argc, char * argv[]){
 
 	batch_pos = (int *)malloc(num_trees * TRAIN_NUM *sizeof(float));
 	tree_is_done = (int *)malloc(num_trees * sizeof(int));
-	
+	fprintf(stderr, "5\n");	
 	cudaDeviceProp dev_prop;
 	cudaGetDeviceProperties(&dev_prop, 0);
 	cudaMalloc((void **) &d_trees, num_trees * NUM_FIELDS * (*tree_arr_length) *sizeof(float));
@@ -928,7 +929,7 @@ int main(int argc, char * argv[]){
 
 	initialize_trees(d_trees, num_trees, *tree_arr_length, d_tree_lengths);
 	initialize_batch_pos(d_batch_pos, TRAIN_NUM, num_trees, dev_prop);
-
+	fprintf(stderr, "6\n");	
 	for(tree_pos=0; tree_pos<100000; tree_pos++){
 		printf("* ================== TREE POS -[ %d ]- ================== *\n", tree_pos);
 
